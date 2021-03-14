@@ -47,7 +47,7 @@
     </span>
     secs
   </p>
-  <p id="remain">remain!!!</p>
+  <p id="remain">untill we are free!</p>
 </main>
 
 <style>
