@@ -53,19 +53,9 @@
 </main>
 
 <style>
-  :global(body) {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    margin: 0;
-    padding: 0;
-
-    background: var(--background);
-    color: var(--text);
-  }
-
   main {
-    font-size: clamp(1rem, 2vw, 2rem);
-
+    border: 1rem solid;
+    font-size: clamp(10px, 2vw, 2rem);
     height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -77,7 +67,8 @@
   }
 
   p {
-    outline: 1px solid;
+    padding: 1rem;
+    border: 1px solid;
     margin: 0;
     display: grid;
     place-content: center;
@@ -85,6 +76,7 @@
     text-transform: uppercase;
     letter-spacing: 0.25ch;
     font-weight: 900;
+    line-height: 1;
   }
 
   .strike {
@@ -95,6 +87,7 @@
     font-size: 300%;
     font-weight: 200;
     margin-bottom: 0.25rem;
+    margin-top: -0.2em;
   }
 
   #days {
