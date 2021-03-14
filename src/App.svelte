@@ -39,15 +39,17 @@
     <span class="number">
       {minutes}
     </span>
-    min
+    minutes
   </p>
   <p id="secs">
     <span class="number">
       {seconds}
     </span>
-    secs
+    seconds
   </p>
-  <p id="remain">untill we are free!</p>
+  <p id="remain">
+    until we are &nbsp;<span class="strike">free</span> &nbsp; inoculated!
+  </p>
 </main>
 
 <style>
@@ -83,12 +85,16 @@
     text-transform: uppercase;
     letter-spacing: 0.25ch;
     font-weight: 900;
-    line-height: 1;
+  }
+
+  .strike {
+    text-decoration: line-through;
   }
 
   .number {
     font-size: 300%;
     font-weight: 200;
+    margin-bottom: 0.25rem;
   }
 
   #days {
@@ -111,6 +117,8 @@
   }
   #remain {
     grid-area: remain;
-    font-weight: 700;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
   }
 </style>
