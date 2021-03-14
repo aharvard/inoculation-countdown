@@ -114,4 +114,15 @@
     display: flex;
     align-items: center;
   }
+
+  @media (max-width: 600px) {
+    main {
+      grid-template-rows: 1fr auto 1fr;
+    }
+
+    #remain {
+      align-items: flex-start;
+      padding-top: 2rem;
+    }
+  }
 </style>
