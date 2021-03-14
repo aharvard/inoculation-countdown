@@ -48,14 +48,14 @@
     seconds
   </p>
   <p id="remain">
-    until we are &nbsp;<span class="strike">free</span> &nbsp; inoculated!
+    until we're &nbsp;<span class="strike">free</span> &nbsp; inoculated!
   </p>
 </main>
 
 <style>
   main {
     border: 1rem solid;
-    font-size: clamp(10px, 2vw, 2rem);
+    font-size: clamp(14px, 2vw, 2rem);
     height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -117,7 +117,23 @@
 
   @media (max-width: 600px) {
     main {
+      border: none;
       grid-template-rows: 1fr auto 1fr;
+    }
+    p {
+      border: none;
+    }
+
+    #hours {
+      border-top: 1px solid;
+      border-bottom: 1px solid;
+    }
+    #mins {
+      border: 1px solid;
+    }
+    #secs {
+      border-top: 1px solid;
+      border-bottom: 1px solid;
     }
 
     #remain {
