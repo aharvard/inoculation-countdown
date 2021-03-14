@@ -11,6 +11,13 @@
   $: minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   $: hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
+  const plural = (num, str) => (num === 1 ? str : str + "s");
+
+  $: daysLabel = plural(days, "day");
+  $: secondsLabel = plural(seconds, "second");
+  $: minutesLabel = plural(minutes, "minute");
+  $: hoursLabel = plural(hours, "hour");
+
   onMount(() => {
     const interval = setInterval(() => {
       now = new Date();
@@ -27,25 +34,25 @@
     <span class="number">
       {days}
     </span>
-    days
+    {daysLabel}
   </p>
   <p id="hours">
     <span class="number">
       {hours}
     </span>
-    hours
+    {hoursLabel}
   </p>
   <p id="mins">
     <span class="number">
       {minutes}
     </span>
-    minutes
+    {minutesLabel}
   </p>
   <p id="secs">
     <span class="number">
       {seconds}
     </span>
-    seconds
+    {secondsLabel}
   </p>
   <p id="remain">
     until we're &nbsp;<span class="strike">free</span> &nbsp; inoculated!
