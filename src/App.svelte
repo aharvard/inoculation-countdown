@@ -142,7 +142,8 @@
   #progess-label {
     color: var(--text);
     width: 100%;
-    padding: 0.5em 0.1em;
+    padding: 0.5em 0;
+    padding-right: 0.25em;
     text-align: right;
     height: 100%;
     font-weight: 900;
@@ -177,7 +178,7 @@
 
   @media (max-width: 600px) {
     main {
-      min-height: 100%;
+      min-height: 90vh;
       border: none;
       grid-template-rows: 1fr auto auto 1fr;
     }
