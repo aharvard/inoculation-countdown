@@ -149,6 +149,7 @@
     font-weight: 900;
     line-height: 1;
     z-index: 1;
+    font-size: 70%;
   }
 
   #days {
