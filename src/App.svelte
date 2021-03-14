@@ -1,15 +1,17 @@
 <script>
   import { onMount } from "svelte";
 
-  const countDownDate = new Date("Apr 23, 2021 9:15:00").getTime();
+  const firstShotDate = new Date("Mar 10, 2021 11:15:00").getTime();
+  const fullInocDate = new Date("Apr 23, 2021 9:15:00").getTime();
+  const inocPeriod = fullInocDate - firstShotDate;
 
   $: now = new Date();
-  $: distance = countDownDate - now;
+  $: timeLeft = fullInocDate - now;
 
-  $: days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  $: seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  $: minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  $: hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  $: days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  $: seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+  $: minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  $: hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
   const plural = (num, str) => (num === 1 ? str : str + "s");
 
@@ -17,6 +19,8 @@
   $: secondsLabel = plural(seconds, "second");
   $: minutesLabel = plural(minutes, "minute");
   $: hoursLabel = plural(hours, "hour");
+
+  $: inocWaitingProgress = (100 - (timeLeft / inocPeriod) * 100).toFixed(2);
 
   onMount(() => {
     const interval = setInterval(() => {
@@ -54,6 +58,11 @@
     </span>
     {secondsLabel}
   </p>
+  <div id="progress" aria-label="{inocWaitingProgress}% of the way there!">
+    <div id="bar" style="--progress-width: {inocWaitingProgress}%">
+      <span id="progess-label">{inocWaitingProgress}%</span>
+    </div>
+  </div>
   <p id="remain">
     until we're &nbsp;<span class="strike">free</span> &nbsp; inoculated!
   </p>
@@ -62,14 +71,16 @@
 <style>
   main {
     border: 1rem solid;
+    overflow: hidden;
     font-size: clamp(14px, 2vw, 2rem);
-    height: 100vh;
+    min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 2fr 1fr 0.75fr;
+    grid-template-rows: 2fr 1fr auto 0.75fr;
     grid-template-areas:
       "days days days"
       "hours mins secs"
+      "progress progress progress"
       "remain remain remain";
   }
 
@@ -95,6 +106,48 @@
     font-weight: 200;
     margin-bottom: 0.25rem;
     margin-top: -0.2em;
+  }
+
+  #progress {
+    grid-area: progress;
+    background: var(--text);
+  }
+
+  #bar {
+    background: var(--background);
+    width: var(--progress-width);
+    margin: 0.75rem 0;
+    display: flex;
+    position: relative;
+  }
+
+  #bar::before,
+  #bar::after {
+    content: "";
+    background: var(--background);
+    height: 70%;
+    width: 1em;
+    position: absolute;
+    transform-origin: top right;
+    transform: rotate(-45deg);
+    right: 0;
+    top: 0;
+  }
+  #bar::after {
+    transform-origin: bottom right;
+    transform: rotate(45deg);
+    top: initial;
+    bottom: 0;
+  }
+  #progess-label {
+    color: var(--text);
+    width: 100%;
+    padding: 0.5em 0.1em;
+    text-align: right;
+    height: 100%;
+    font-weight: 900;
+    line-height: 1;
+    z-index: 1;
   }
 
   #days {
@@ -124,8 +177,9 @@
 
   @media (max-width: 600px) {
     main {
+      min-height: 100%;
       border: none;
-      grid-template-rows: 1fr auto 1fr;
+      grid-template-rows: 1fr auto auto 1fr;
     }
     p {
       border: none;
