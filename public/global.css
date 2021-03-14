@@ -1,0 +1,23 @@
+html {
+	--light-gray: #f7f7f7;
+	--dark-gray: #3f3f3f;
+	--black: #111;
+	
+	--background: var(--light-gray);
+	--text: var(--black);
+}
+
+@media (prefers-color-scheme: dark) {
+	html {
+		--background: var(--dark-gray);
+		--text: var(--light-gray);
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	html {
+		--background: var(--light-gray);
+		--text: var(--black);
+	}
+}
+
