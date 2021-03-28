@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
 
   const firstShotDate = new Date("Mar 10, 2021 11:15:00").getTime();
+  const secondShotDate = new Date("Apr 9, 2021 9:15:00").getTime() - 1000;
   const fullInocDate = new Date("Apr 23, 2021 9:15:00").getTime();
   const inocPeriod = fullInocDate - firstShotDate;
 
@@ -22,6 +23,8 @@
 
   $: inocWaitingProgress = (100 - (timeLeft / inocPeriod) * 100).toFixed(2);
 
+  $: secondDoseDays = days - 14;
+
   onMount(() => {
     const interval = setInterval(() => {
       now = new Date();
@@ -34,6 +37,26 @@
 </script>
 
 <main>
+  {#if secondShotDate > now}
+    <p id="secondDose">
+      {#if secondDoseDays > 0}
+        {secondDoseDays}
+        {daysLabel}
+      {/if}
+      {#if secondDoseDays !== 0 && hours >= 0}
+        <!-- content here -->
+        {hours}
+        {hoursLabel}
+      {/if}
+      {#if secondDoseDays !== 0 && minutes >= 0}
+        {minutes}
+        {minutesLabel}
+      {/if}
+      {seconds}
+      {secondsLabel}
+      until second dose.
+    </p>
+  {/if}
   <p id="days">
     <span class="number">
       {days}
@@ -76,8 +99,9 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 2fr 1fr auto 0.75fr;
+    grid-template-rows: auto 2fr 1fr auto 0.75fr;
     grid-template-areas:
+      "secondDose secondDose secondDose"
       "days days days"
       "hours mins secs"
       "progress progress progress"
@@ -108,6 +132,16 @@
     margin-top: -0.2em;
   }
 
+  #secondDose {
+    grid-area: secondDose;
+    background: var(--text);
+    color: var(--background);
+    border: none;
+    margin: -1rem 0 0;
+    font-size: 80%;
+    letter-spacing: 0.25ch;
+    font-weight: 400;
+  }
   #progress {
     grid-area: progress;
     background: var(--text);
@@ -181,10 +215,16 @@
     main {
       min-height: 90vh;
       border: none;
-      grid-template-rows: 1fr auto auto 1fr;
+      grid-template-rows: auto 1fr auto auto 1fr;
     }
     p {
       border: none;
+    }
+
+    #secondDose {
+      margin-top: 0rem;
+      padding: 1rem 15vw;
+      line-height: 1.5;
     }
 
     #hours {
