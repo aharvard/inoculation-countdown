@@ -223,7 +223,7 @@
 
     #secondDose {
       margin-top: 0rem;
-      padding: 1rem 15vw;
+      padding: 1rem 10vw;
       line-height: 1.5;
     }
 
