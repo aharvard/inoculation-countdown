@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
 
   const firstShotDate = new Date("Mar 10, 2021 11:15:00").getTime();
-  const secondShotDate = new Date("Apr 9, 2021 9:15:00").getTime() - 1000;
+  const secondShotDate = new Date("Apr 9, 2021 9:19:00").getTime() - 1000;
   const fullInocDate = new Date("Apr 23, 2021 9:15:00").getTime();
   const inocPeriod = fullInocDate - firstShotDate;
 
