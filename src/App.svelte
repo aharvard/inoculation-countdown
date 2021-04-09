@@ -39,16 +39,16 @@
 <main>
   {#if secondShotDate > now}
     <p id="secondDose">
-      {#if secondDoseDays > 0}
+      {#if secondDoseDays >= 0}
         {secondDoseDays}
         {daysLabel}
       {/if}
-      {#if hours > 0}
+      {#if hours >= 0}
         <!-- content here -->
         {hours}
         {hoursLabel}
       {/if}
-      {#if hours > 0 && minutes >= 0}
+      {#if minutes >= 0}
         {minutes}
         {minutesLabel}
       {/if}
