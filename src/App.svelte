@@ -48,7 +48,7 @@
         {hours}
         {hoursLabel}
       {/if}
-      {#if minutes > 0}
+      {#if hours > 0 && minutes >= 0}
         {minutes}
         {minutesLabel}
       {/if}
