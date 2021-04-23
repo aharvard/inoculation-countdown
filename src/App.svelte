@@ -1,6 +1,8 @@
 <script>
   import { onMount } from "svelte";
 
+  import ConfettiGenerator from "confetti-js";
+
   const firstShotDate = new Date("Mar 10, 2021 11:15:00").getTime();
   const secondShotDate = new Date("Apr 9, 2021 9:19:00").getTime() - 1000;
   const fullInocDate = new Date("Apr 23, 2021 9:19:00").getTime();
@@ -25,10 +27,16 @@
 
   $: secondDoseDays = days - 14;
 
+  $: done = now > fullInocDate ? true : false;
+
   onMount(() => {
     const interval = setInterval(() => {
       now = new Date();
     }, 1000);
+
+    const confettiSettings = { target: "my-canvas" };
+    const confetti = new ConfettiGenerator(confettiSettings);
+    confetti.render();
 
     return () => {
       clearInterval(interval);
@@ -57,38 +65,44 @@
       until second dose.
     </p>
   {/if}
-  <p id="days">
-    <span class="number">
-      {days}
-    </span>
-    {daysLabel}
-  </p>
-  <p id="hours">
-    <span class="number">
-      {hours}
-    </span>
-    {hoursLabel}
-  </p>
-  <p id="mins">
-    <span class="number">
-      {minutes}
-    </span>
-    {minutesLabel}
-  </p>
-  <p id="secs">
-    <span class="number">
-      {seconds}
-    </span>
-    {secondsLabel}
-  </p>
-  <div id="progress" aria-label="{inocWaitingProgress}% of the way there!">
-    <div id="bar" style="--progress-width: {inocWaitingProgress}%">
-      <span id="progess-label">{inocWaitingProgress}%</span>
+  {#if now < fullInocDate}
+    <p id="days">
+      <span class="number">
+        {days}
+      </span>
+      {daysLabel}
+    </p>
+    <p id="hours">
+      <span class="number">
+        {hours}
+      </span>
+      {hoursLabel}
+    </p>
+    <p id="mins">
+      <span class="number">
+        {minutes}
+      </span>
+      {minutesLabel}
+    </p>
+    <p id="secs">
+      <span class="number">
+        {seconds}
+      </span>
+      {secondsLabel}
+    </p>
+    <div id="progress" aria-label="{inocWaitingProgress}% of the way there!">
+      <div id="bar" style="--progress-width: {inocWaitingProgress}%">
+        <span id="progess-label">{inocWaitingProgress}%</span>
+      </div>
     </div>
-  </div>
-  <p id="remain">
-    until we're &nbsp;<span class="strike">free</span> &nbsp; inoculated!
-  </p>
+    <p id="remain">
+      until we're &nbsp;<span class="strike">free</span> &nbsp; inoculated!
+    </p>
+  {/if}
+  {#if now > fullInocDate}
+    <h1>All done!</h1>
+  {/if}
+  <canvas class:done id="my-canvas" />
 </main>
 
 <style>
@@ -108,6 +122,20 @@
       "remain remain remain";
   }
 
+  canvas {
+    opacity: 0;
+  }
+
+  .done {
+    opacity: 1;
+  }
+  h1,
+  canvas {
+    text-align: center;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    place-self: center;
+  }
   p {
     padding: 1rem;
     border: 1px solid;
